@@ -1,5 +1,8 @@
 package project.spring4.mvc.employee.dao;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -16,11 +19,11 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 
     private JdbcTemplate jdbcTemplate;
 
-    @Value("") private String insertSQL;
+    @Value("#{jdbc['insertSQL']}") private String insertSQL;
     @Value("#{jdbc['selectSQL']}") private String selectSQL;
-    @Value("") private String selectOneSQL;
-    @Value("") private String updateSQL;
-    @Value("") private String deleteSQL;
+    @Value("#{jdbc['selectOneSQL']}") private String selectOneSQL;
+    @Value("#{jdbc['updateSQL']}") private String updateSQL;
+    @Value("#{jdbc['deleteSQL']}") private String deleteSQL;
 
     @Autowired
     public EmployeeDAOImpl(JdbcTemplate jdbcTemplate) {
@@ -28,8 +31,12 @@ public class EmployeeDAOImpl implements EmployeeDAO {
     }
 
     @Override
-    public int insertEmployee(Employee emp) {
-        return 0;
+    public int insertEmployee(Employee e) {
+        Object[] params = new Object[] { e.getEmpid(), e.getFname(), e.getLname(),
+                e.getEmail(), e.getPhone(), e.getHdate(), e.getJobid(), e.getSal(),
+                e.getComm(), e.getMgrid(), e.getDeptid() };
+
+        return jdbcTemplate.update(insertSQL, params);
     }
 
     @Override
