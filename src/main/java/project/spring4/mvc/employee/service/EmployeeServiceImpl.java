@@ -1,16 +1,18 @@
 package project.spring4.mvc.employee.service;
 
+import org.apache.logging.log4j.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import project.spring4.mvc.employee.dao.EmployeeDAO;
+import project.spring4.mvc.employee.dao.EmployeeDAOImpl;
 import project.spring4.mvc.employee.model.Employee;
 
 import java.util.List;
 
 @Service("empsrv")
 public class EmployeeServiceImpl implements EmployeeService {
-
-    private EmployeeDAO empdao;
+    private EmployeeDAO empdao = null;
+    private static final org.apache.logging.log4j.Logger Logger = LogManager.getLogger(EmployeeDAOImpl.class);
 
     @Autowired
     public EmployeeServiceImpl(EmployeeDAO empdao) {
@@ -39,7 +41,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public boolean modifyEmployee(Employee emp) {
-        return false;
+        boolean result = false;
+
+
+        if(empdao.insertEmployee(emp) > 0) result = true;
+        return result;
     }
 
     @Override

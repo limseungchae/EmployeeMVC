@@ -1,5 +1,8 @@
 package project.spring4.mvc.employee.dao;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -14,6 +17,7 @@ import java.util.List;
 @Repository("empdao")
 public class EmployeeDAOImpl implements EmployeeDAO {
 
+    private static final Logger Logger = LogManager.getLogger(EmployeeDAOImpl.class);
     private JdbcTemplate jdbcTemplate;
 
     @Value("#{jdbc['insertSQL']}") private String insertSQL;
@@ -77,7 +81,10 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 
     @Override
     public int updateEmployee(Employee emp) {
-        return 0;
+        Object[] param = new Object[] {emp.getJobid(), emp.getMgrid(),
+                emp.getDeptid(), emp.getEmpid() };
+
+        return jdbcTemplate.update(updateSQL, param);
     }
 
     @Override
