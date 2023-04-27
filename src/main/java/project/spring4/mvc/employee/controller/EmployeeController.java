@@ -64,36 +64,30 @@ public class EmployeeController {
         return mv;
     }
 
-
-    // 사원정보 수정
     @GetMapping("/modify")
     public ModelAndView modify(@RequestParam int empid) {
         ModelAndView mv = new ModelAndView();
 
-        mv.addObject("emp",empsrv.readOneEmployee(empid));
+        mv.addObject("emp", empsrv.readOneEmployee(empid));
         mv.setViewName("empmodify");
-
 
         return mv;
     }
 
     @PostMapping("/modify")
     public ModelAndView modifyok(Employee emp) {
-        String view = "empfail";
         ModelAndView mv = new ModelAndView();
+        String view = "empfail";
 
-        if (empsrv.modifyEmployee(emp))
+        if (empsrv.modifyEmployee(emp)) {
             view = "redirect:/view?empid=" + emp.getEmpid();
+        }
 
         mv.setViewName(view);
-
         return mv;
     }
 
 
-
-
-    // 사원정보 삭제
     @GetMapping("/remove")
     public String remove(@RequestParam int empid) {
 
