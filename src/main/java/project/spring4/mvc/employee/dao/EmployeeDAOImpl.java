@@ -16,11 +16,11 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 
     private JdbcTemplate jdbcTemplate;
 
-    @Value("#{jdbc['insertSQL']}") private String insertSQL;
-    @Value("#{jdbc['selectSQL']}") private String selectSQL;
-    @Value("#{jdbc['selectOneSQL']}") private String selectOneSQL;
-    @Value("#{jdbc['updateSQL']}") private String updateSQL;
-    @Value("#{jdbc['deleteSQL']}") private String deleteSQL;
+    @Value("#{sql['insertSQL']}") private String insertSQL;
+    @Value("#{sql['selectSQL']}") private String selectSQL;
+    @Value("#{sql['selectOneSQL']}") private String selectOneSQL;
+    @Value("#{sql['updateSQL']}") private String updateSQL;
+    @Value("#{sql['deleteSQL']}") private String deleteSQL;
 
     @Autowired
     public EmployeeDAOImpl(JdbcTemplate jdbcTemplate) {
